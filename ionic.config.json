@@ -1,0 +1,7 @@
+{
+  "name": "benagram_incident",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
