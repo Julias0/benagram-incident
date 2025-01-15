@@ -1,22 +1,29 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton, IonIcon, IonInput } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { send } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
+import nlp from 'compromise';
+import { Message } from '../models/message.model';
+import { MessageService } from '../services/message.service';
+import { GameState } from '../models/game-state.model';
+import { StateService } from '../services/state.service';
+import { RoomService } from '../services/room.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonContent, 
-    IonFooter, 
-    IonButton, 
-    IonIcon, 
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonFooter,
+    IonButton,
+    IonIcon,
     IonInput,
     FormsModule,
     CommonModule
@@ -27,40 +34,22 @@ export class HomePage {
   @ViewChild(IonContent) content!: IonContent;
 
   newMessage: string = '';
-  messages: {
-    content: string;
-    sender: 'user' | 'bot';
-    createdAt: Date;
-  }[] = [
-    {
-      content: 'Hello! How are you?',
-      sender: 'bot',
-      createdAt: new Date()
-    },
-    {
-      content: 'I\'m doing great! Thanks for asking 😊',
-      sender: 'user',
-      createdAt: new Date()
-    },
-    {
-      content: 'What\'s your name?',
-      sender: 'bot',
-      createdAt: new Date()
-    },
-    {
-      content: 'I\'m a chatbot. How can I help you today?',
-      sender: 'bot',
-      createdAt: new Date()
-    },
-    {
-      content: 'I\'m a chatbot. How can I help you today?',
-      sender: 'bot',
-      createdAt: new Date()
-    }
-  ];
+  messages: Message[] = [];
+  messageService = inject(MessageService);
+  stateService = inject(StateService);
+  roomService = inject(RoomService);
+  currentState$: Observable<GameState> = this.stateService.currentState.asObservable();
 
   constructor() {
     addIcons({ send });
+    const room = this.roomService.getRoom(this.stateService.getCurrentStateValue().currentRoom);
+    if (room) {
+      this.messages.push({
+        content: room.verbHandler('look', this.stateService.getCurrentStateValue(), []).message,
+        sender: 'bot',
+        createdAt: new Date()
+      });
+    }
   }
 
   async sendMessage() {
@@ -70,13 +59,21 @@ export class HomePage {
         sender: 'user',
         createdAt: new Date()
       });
-      this.messages.push({
-        content: 'Hello! How are you?',
-        sender: 'bot',
-        createdAt: new Date()
-      });
-      this.newMessage = '';
+
+      const preProcessedMessage = this.messageService.preProcessSentence(this.newMessage);
+      const terms = this.messageService.preProcessTerms(nlp(preProcessedMessage).termList());
+      console.log(terms);
+
+      const validationMessages = this.messageService.validateSentence(terms);
+      if (validationMessages) {
+        this.messages.push(validationMessages);
+      } else {
+        const handledSentence = this.messageService.handleSentence(terms, this.stateService.getCurrentStateValue());
+        this.stateService.setCurrentState(handledSentence.newState);
+        this.messages.push(handledSentence.message);
+      }
     }
+    this.newMessage = '';
     await this.scrollToBottom();
   }
 
@@ -85,6 +82,12 @@ export class HomePage {
       await this.content.scrollToBottom(300);
     } catch (err) {
       console.error('Error scrolling to bottom:', err);
+    }
+  }
+
+  handleKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.sendMessage();
     }
   }
 }

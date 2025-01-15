@@ -50,6 +50,9 @@ importers:
       '@ionic/angular':
         specifier: ^8.0.0
         version: 8.4.1(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/forms@19.0.6(@angular/common@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.0.6(@angular/animations@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@angular/router@19.0.6(@angular/common@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.0.6(@angular/animations@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(rxjs@7.8.1)(zone.js@0.15.0)
+      compromise:
+        specifier: ^14.14.3
+        version: 14.14.3
       ionicons:
         specifier: ^7.0.0
         version: 7.4.0
@@ -2496,6 +2499,10 @@ packages:
     resolution: {integrity: sha512-bQJ0YRck5ak3LgtnpKkiabX5pNF7tMUh1BSy2ZBOTh0Dim0BUu6aPPwByIns6/A5Prh8PufSPerMDUklpzes2Q==}
     engines: {node: '>= 0.8.0'}
 
+  compromise@14.14.3:
+    resolution: {integrity: sha512-nR/3bJJ/Q2LZF9is66s9zhwhm63zcZ+/EaZWUJ8PgEO40ROctfrKdYQmO+UbwVsrp1/crDhCrsMJu0rgo/JirQ==}
+    engines: {node: '>=12.0.0'}
+
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
@@ -2731,6 +2738,10 @@ packages:
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
+
+  efrt@2.7.0:
+    resolution: {integrity: sha512-/RInbCy1d4P6Zdfa+TMVsf/ufZVotat5hCw3QXmWtjU+3pFEOvOQ7ibo3aIxyCJw2leIeAMjmPj+1SLJiCpdrQ==}
+    engines: {node: '>=12.0.0'}
 
   electron-to-chromium@1.5.82:
     resolution: {integrity: sha512-Zq16uk1hfQhyGx5GpwPAYDwddJuSGhtRhgOA2mCxANYaDT79nAeGnaXogMGng4KqLaJUVnOnuL0+TDop9nLOiA==}
@@ -3179,6 +3190,10 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  grad-school@0.0.5:
+    resolution: {integrity: sha512-rXunEHF9M9EkMydTBux7+IryYXEZinRk6g8OBOGDBzo/qWJjhTxy86i5q7lQYpCLHN8Sqv1XX3OIOc7ka2gtvQ==}
+    engines: {node: '>=8.0.0'}
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
@@ -4849,6 +4864,9 @@ packages:
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+
+  suffix-thumb@5.0.2:
+    resolution: {integrity: sha512-I5PWXAFKx3FYnI9a+dQMWNqTxoRt6vdBdb0O+BJ1sxXCWtSoQCusc13E58f+9p4MYx/qCnEMkD5jac6K2j3dgA==}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -7946,6 +7964,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  compromise@14.14.3:
+    dependencies:
+      efrt: 2.7.0
+      grad-school: 0.0.5
+      suffix-thumb: 5.0.2
+
   concat-map@0.0.1: {}
 
   connect-history-api-fallback@2.0.0: {}
@@ -8165,6 +8189,8 @@ snapshots:
   eastasianwidth@0.2.0: {}
 
   ee-first@1.1.1: {}
+
+  efrt@2.7.0: {}
 
   electron-to-chromium@1.5.82: {}
 
@@ -8812,6 +8838,8 @@ snapshots:
   gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
+
+  grad-school@0.0.5: {}
 
   graphemer@1.4.0: {}
 
@@ -10665,6 +10693,8 @@ snapshots:
   strip-bom@3.0.0: {}
 
   strip-json-comments@3.1.1: {}
+
+  suffix-thumb@5.0.2: {}
 
   supports-color@7.2.0:
     dependencies:

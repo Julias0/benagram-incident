@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Chat
+      <div class="header-content">
+        <span>{{ (currentState$ | async)?.currentRoom }}</span>
+        <span class="health">❤️ {{ (currentState$ | async)?.health }}</span>
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -28,6 +31,7 @@
         placeholder="Type a message"
         class="message-input"
         [(ngModel)]="newMessage"
+        (keyup)="handleKeyPress($event)"
       ></ion-input>
       <ion-button fill="clear" (click)="sendMessage()">
         <ion-icon name="send"></ion-icon>
