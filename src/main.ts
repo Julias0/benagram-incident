@@ -4,6 +4,16 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import posthog from 'posthog-js'
+import { environment } from './environments/environment';
+
+posthog.init(
+  environment.POSTHOG_KEY,
+  {
+    api_host:environment.POSTHOG_HOST,
+    person_profiles: 'always', // or 'always' to create profiles for anonymous users as well
+  }
+)
 
 bootstrapApplication(AppComponent, {
   providers: [

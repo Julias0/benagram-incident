@@ -11,6 +11,7 @@ import { GameState } from '../models/game-state.model';
 import { StateService } from '../services/state.service';
 import { RoomService } from '../services/room.service';
 import { Observable } from 'rxjs';
+import posthog from 'posthog-js';
 
 @Component({
   selector: 'app-home',
@@ -44,7 +45,7 @@ export class HomePage {
     addIcons({ send });
     const room = this.roomService.getRoom(this.stateService.getCurrentStateValue().currentRoom);
     if (room) {
-      this.messages.push({
+      this.addMessages({
         content: room.verbHandler('look', this.stateService.getCurrentStateValue(), []).message,
         sender: 'bot',
         createdAt: new Date()
@@ -54,7 +55,7 @@ export class HomePage {
 
   async sendMessage() {
     if (this.newMessage.trim()) {
-      this.messages.push({
+      this.addMessages({
         content: this.newMessage,
         sender: 'user',
         createdAt: new Date()
@@ -66,15 +67,24 @@ export class HomePage {
 
       const validationMessages = this.messageService.validateSentence(terms);
       if (validationMessages) {
-        this.messages.push(validationMessages);
+        this.addMessages(validationMessages);
       } else {
         const handledSentence = this.messageService.handleSentence(terms, this.stateService.getCurrentStateValue());
         this.stateService.setCurrentState(handledSentence.newState);
-        this.messages.push(handledSentence.message);
+        this.addMessages(handledSentence.message);
       }
     }
     this.newMessage = '';
     await this.scrollToBottom();
+  }
+
+  addMessages(messages: Message) {
+    posthog.capture('message_sent', {
+      message: messages.content,
+      sender: messages.sender,
+      createdAt: messages.createdAt
+    });
+    this.messages.push(messages);
   }
 
   private async scrollToBottom() {
