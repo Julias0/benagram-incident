@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">benagram_incident</string>
+    <string name="title_activity_main">benagram_incident</string>
+    <string name="package_name">com.dhar.benagram</string>
+    <string name="custom_url_scheme">com.dhar.benagram</string>
+</resources>

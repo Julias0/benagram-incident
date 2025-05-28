@@ -32,6 +32,9 @@ importers:
       '@angular/router':
         specifier: ^19.0.0
         version: 19.0.6(@angular/common@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.0.6(@angular/animations@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.6(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1)
+      '@capacitor/android':
+        specifier: ^7.2.0
+        version: 7.2.0(@capacitor/core@6.2.0)
       '@capacitor/app':
         specifier: 6.0.2
         version: 6.0.2(@capacitor/core@6.2.0)
@@ -103,7 +106,7 @@ importers:
         specifier: ^19.0.0
         version: 19.0.6
       '@capacitor/cli':
-        specifier: 6.2.0
+        specifier: ^6.2.0
         version: 6.2.0
       '@ionic/angular-toolkit':
         specifier: ^12.0.0
@@ -893,6 +896,11 @@ packages:
   '@babel/types@7.26.5':
     resolution: {integrity: sha512-L6mZmwFDK6Cjh1nRCLXpa6no13ZIioJDz7mdkzHv399pThrTa/k0nUlNaenOeh2kWu/iaOQYElEpKPUswUa9Vg==}
     engines: {node: '>=6.9.0'}
+
+  '@capacitor/android@7.2.0':
+    resolution: {integrity: sha512-zdhEy3jZPG5Toe/pGzKtDgIiBGywjaoEuQWnGVjBYPlSAEUtAhpZ2At7V0SCb26yluAuzrAUV0Ue+LQeEtHwFQ==}
+    peerDependencies:
+      '@capacitor/core': ^7.2.0
 
   '@capacitor/app@6.0.2':
     resolution: {integrity: sha512-SiGTGgslK4TbWJVImCUL1odul7/YFkVfkYtAYS9AAEzQpxBECBeRnuN3FFBcfZ9eiN1XxFBFchhiwpxtx/c7yQ==}
@@ -6387,6 +6395,10 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
+
+  '@capacitor/android@7.2.0(@capacitor/core@6.2.0)':
+    dependencies:
+      '@capacitor/core': 6.2.0
 
   '@capacitor/app@6.0.2(@capacitor/core@6.2.0)':
     dependencies:
