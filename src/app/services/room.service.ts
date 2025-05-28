@@ -218,16 +218,37 @@ export class RoomService {
       objects: [{
         name: 'bus',
         verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
-          const busActions = ['board', 'get on', 'get off'];
+          if (verb === 'look') {
+            return {
+              message: 'An old state transport bus sits idle at the stand. The conductor leans against it, checking his watch repeatedly. A schedule board shows that the last bus to Benagram left an hour ago.',
+              newState: currentState
+            };
+          }
+
+          const busActions = ['board', 'get on', 'get off', 'enter', 'ride', 'take'];
           if (busActions.includes(verb)) {
             return {
-              message: 'The conductor looks at you nervously and says "Last bus left an hour ago. Next bus to Benagram is tomorrow morning. You asking about that missing lady doctor? Heard she was real smart, studying them old symbols. But something down there got to her mind, I reckon. Started talking about \'awakening\' something ancient. You sure you want to go there?"',
+              message: 'The conductor shakes his head. "No more buses to Benagram today. Last one left an hour ago, next one\'s tomorrow morning." He lowers his voice, "You asking about that missing archaeologist? Dr. Chen? Strange business, that. She was studying those temple symbols, then started acting weird. Talking about \'awakening\' something. Haven\'t seen her in weeks. If you\'re heading there, be careful."',
+              newState: currentState
+            };
+          }
+
+          const talkActions = ['talk', 'speak', 'ask', 'inquire'];
+          if (talkActions.includes(verb)) {
+            if (params.some(p => ['schedule', 'time', 'next', 'bus'].includes(p.text.toLowerCase()))) {
+              return {
+                message: 'The conductor checks his schedule. "Next bus to Benagram is tomorrow morning at 6 AM. But..." he hesitates, "way things have been lately, I\'m not sure I\'d recommend waiting."',
+                newState: currentState
+              };
+            }
+            return {
+              message: 'The conductor seems nervous. "Been strange happenings in Benagram lately. That research team stirred up something at the temple. Dr. Chen was the last one still going there, until she disappeared too. You might want to reconsider your journey."',
               newState: currentState
             };
           }
 
           return {
-            message: 'The bus isn\'t going anywhere today. You could try looking around ("look") or checking if the auto is still available.',
+            message: 'You can look at the bus ("look bus"), try to board it ("board bus"), ask about the schedule ("ask schedule"), or talk to the conductor ("talk conductor").',
             newState: currentState
           };
         }

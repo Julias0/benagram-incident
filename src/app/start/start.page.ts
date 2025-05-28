@@ -9,9 +9,6 @@ import { StateService } from '../services/state.service';
   templateUrl: 'start.page.html',
   styleUrls: ['start.page.scss'],
   imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonButton,
     CommonModule
