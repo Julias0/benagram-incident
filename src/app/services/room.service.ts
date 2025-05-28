@@ -44,7 +44,7 @@ export class RoomService {
       };
     } else if (paymentActions.includes(verb) && !currentState.inventory.includes('100 Rupee Note')) {
       return {
-        message: 'You don\'t have any 100 Rupee Notes.',
+        message: 'You don\'t have any 100 Rupee Notes. You might want to look around for other transportation options or try to find some money.',
         newState: currentState
       };
     }
@@ -62,7 +62,7 @@ export class RoomService {
     }
 
     return {
-      message: 'You can\'t do that.',
+      message: 'The auto driver seems uninterested in that. Try talking to him, looking at the auto, or paying the fare if you have enough money.',
       newState: currentState
     };
   };
@@ -83,13 +83,13 @@ export class RoomService {
           const doorActions = ['open', 'close', 'lock', 'unlock', 'enter', 'exit'];
           if (doorActions.includes(verb)) {
             return {
-              message: 'You try to open the train door, but it is locked.',
+              message: 'You try to open the train door, but it is locked. Maybe you should try heading west towards the exit.',
               newState: currentState
             };
           }
 
           return {
-            message: 'You can\'t do that.',
+            message: 'The train is locked and immobile. You can look at it or try going west towards the exit.',
             newState: currentState
           };
         }
@@ -112,10 +112,14 @@ export class RoomService {
               }
             }
           }
+          return {
+            message: 'The only way out is west. Try "go west" to leave the station.',
+            newState: currentState
+          };
         }
 
         return {
-          message: 'You can\'t do that.',
+          message: 'You can try looking around ("look") or going west ("go west") to exit the station.',
           newState: currentState
         };
       }
@@ -148,10 +152,14 @@ export class RoomService {
               }
             }
           }
+          return {
+            message: 'You can go to the bus stand ("go bus") or interact with the auto and its driver.',
+            newState: currentState
+          };
         }
 
         return {
-          message: 'You can\'t do that.',
+          message: 'You can look around ("look"), go to the bus stand ("go bus"), or interact with the auto and its driver (try "talk driver" or "look auto").',
           newState: currentState
         };
       }
@@ -164,13 +172,13 @@ export class RoomService {
           const busActions = ['board', 'get on', 'get off'];
           if (busActions.includes(verb)) {
             return {
-              message: 'The conductor looks at you and says "Last bus left an hour ago. Next bus to Benagram is tomorrow morning. Strange place, that village..."',
+              message: 'The conductor looks at you and says "Last bus left an hour ago. Next bus to Benagram is tomorrow morning. Strange place, that village..." Maybe you should try the auto instead.',
               newState: currentState
             };
           }
 
           return {
-            message: 'You can\'t do that.',
+            message: 'The bus isn\'t going anywhere today. You could try looking around ("look") or checking if the auto is still available.',
             newState: currentState
           };
         }
@@ -184,7 +192,7 @@ export class RoomService {
         }
 
         return {
-          message: 'You can\'t do that.',
+          message: 'You can look around ("look"), check the bus ("look bus"), or try to board it ("board bus"). You might also want to go back to check the auto.',
           newState: currentState
         };
       }
@@ -223,7 +231,7 @@ export class RoomService {
         }
 
         return {
-          message: 'You can\'t do that.',
+          message: 'During the journey, you can look around ("look"), try to talk to the driver ("talk"), or simply wait ("wait") until you arrive.',
           newState: currentState
         };
       }
@@ -240,7 +248,7 @@ export class RoomService {
             };
           }
           return {
-            message: 'You can\'t do that.',
+            message: 'The fires are too far to interact with directly. You can look at them ("look fires") or try going deeper into the village ("go").',
             newState: currentState
           };
         }
@@ -264,7 +272,7 @@ export class RoomService {
         }
 
         return {
-          message: 'You can\'t do that.',
+          message: 'You can look around ("look"), examine the fires ("look fires"), or proceed into the village ("go").',
           newState: currentState
         };
       }
@@ -281,7 +289,7 @@ export class RoomService {
             };
           }
           return {
-            message: 'You can\'t do that.',
+            message: 'You can observe the ritual from a distance ("look ritual"), but getting closer might be dangerous. Consider hiding ("hide") or trying to leave ("leave").',
             newState: currentState
           };
         }
@@ -298,7 +306,7 @@ export class RoomService {
             };
           }
           return {
-            message: 'Best to keep your distance...',
+            message: 'The villagers seem dangerous. You might want to hide ("hide") or observe from a safe distance ("look ritual").',
             newState: currentState
           };
         }
@@ -329,7 +337,7 @@ export class RoomService {
         }
 
         return {
-          message: 'You can\'t do that.',
+          message: 'You can look around ("look"), examine the ritual ("look ritual"), hide in the bushes ("hide"), or attempt to leave ("leave"). Be careful with your choices!',
           newState: currentState
         };
       }
