@@ -19,7 +19,7 @@ export class RoomService {
     const autoActions = ['go','speak', 'talk', 'approach', 'ask', 'shout'];
     if (autoActions.includes(verb)) {
       return {
-        message: 'The driver looks at you angrily and says "100 Rupees to go to benagram village. Take it or leave it. But I warn you, no one goes there after sunset."',
+        message: 'The driver looks at you angrily and says "100 Rupees to go to benagram village. Take it or leave it. But I warn you, no one goes there after sunset. Not since the incident with the old temple."',
         newState: currentState
       };
     }
@@ -36,7 +36,7 @@ export class RoomService {
     if (paymentActions.includes(verb) && currentState.inventory.includes('100 Rupee Note')) {
       currentState.inventory = currentState.inventory.filter(item => item !== '100 Rupee Note');
       return {
-        message: 'You board the auto and pay the driver 100 Rupees. The driver mutters something under his breath as he starts driving. The sun is setting...',
+        message: 'You board the auto and pay the driver 100 Rupees. The driver mutters "Your funeral..." under his breath as he starts driving. The sun is setting, casting long shadows across the road...',
         newState: {
           ...currentState,
           currentRoom: 'On the way to Benagram'
@@ -137,7 +137,7 @@ export class RoomService {
       verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
         if (verb === 'look') {
           return {
-            message: 'You can see a bus parked at the bus stand. There is an auto in front of you. The sun is getting low in the sky.',
+            message: 'You can see a bus parked at the bus stand. There is an auto in front of you. The sun is getting low in the sky, casting an eerie red glow over everything.',
             newState: currentState
           };
         }
@@ -172,7 +172,7 @@ export class RoomService {
           const busActions = ['board', 'get on', 'get off'];
           if (busActions.includes(verb)) {
             return {
-              message: 'The conductor looks at you and says "Last bus left an hour ago. Next bus to Benagram is tomorrow morning. Strange place, that village..." Maybe you should try the auto instead.',
+              message: 'The conductor looks at you nervously and says "Last bus left an hour ago. Next bus to Benagram is tomorrow morning. Strange place, that village... Not since they found those markings in the old temple. Best stay away, if you ask me."',
               newState: currentState
             };
           }
@@ -186,7 +186,7 @@ export class RoomService {
       verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
         if (verb === 'look') {
           return {
-            message: 'The bus stand is nearly empty. A single bus is parked here. You can go back to the street.',
+            message: 'The bus stand is nearly empty. A single bus is parked here. You can go back to the street. An old woman in the corner is muttering something about "the ritual" and "the temple".',
             newState: currentState
           };
         }
@@ -203,7 +203,7 @@ export class RoomService {
       verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
         if (verb === 'look') {
           return {
-            message: 'The auto rattles along the dark road. The sun has set completely. Through the trees, you catch glimpses of distant fires in the village. The driver is unusually quiet.',
+            message: 'The auto rattles along the dark road. The sun has set completely. Through the dense trees, you catch glimpses of distant fires in the village. Strange symbols seem to glow faintly on some of the trees. The driver is unusually quiet, his hands trembling slightly on the steering wheel.',
             newState: currentState
           };
         }
@@ -211,7 +211,7 @@ export class RoomService {
         const talkActions = ['talk', 'speak', 'ask', 'chat'];
         if (talkActions.includes(verb)) {
           return {
-            message: 'The driver ignores you completely, his knuckles white on the steering wheel. He drops you near the outskirts of Benagram village.',
+            message: 'The driver ignores you completely, his knuckles white on the steering wheel. You notice he\'s wearing some kind of protective amulet. He suddenly stops the auto near the outskirts of Benagram village, practically pushing you out. "This is as far as I go. The old temple... it\'s not safe after dark."',
             newState: {
               ...currentState,
               currentRoom: 'Benagram Outskirts'
@@ -222,7 +222,7 @@ export class RoomService {
         const waitActions = ['wait', 'end'];
         if (waitActions.includes(verb)) {
           return {
-            message: 'The journey continues in silence.... You arrive at the outskirts of Benagram village.',
+            message: 'The journey continues in silence.... Strange whispers seem to come from the forest. You arrive at the outskirts of Benagram village, the auto driver refusing to go any further.',
             newState: {
               ...currentState,
               currentRoom: 'Benagram Outskirts'
@@ -243,12 +243,12 @@ export class RoomService {
         verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
           if (verb === 'look') {
             return {
-              message: 'Multiple bonfires burn in the distance. You can hear faint chanting carried by the wind.',
+              message: 'Multiple bonfires burn in the distance, forming a strange pattern when viewed together. You can hear faint chanting carried by the wind, mixed with other, less natural sounds.',
               newState: currentState
             };
           }
           return {
-            message: 'The fires are too far to interact with directly. You can look at them ("look fires") or try going deeper into the village ("go").',
+            message: 'The fires are too far to interact with directly. You can look at them ("look fires") or try going deeper into the village ("go"). To the east, you notice the crumbling spire of what must be the old temple.',
             newState: currentState
           };
         }
@@ -256,12 +256,21 @@ export class RoomService {
       verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
         if (verb === 'look') {
           return {
-            message: 'The auto driver has dropped you at the village entrance and quickly driven away. Multiple fires burn in the distance. The village seems deserted, but you can hear chanting from somewhere deeper in the village. A narrow path leads towards the center.',
+            message: 'The auto driver has fled, leaving you at the village entrance. Multiple fires burn in the distance, forming an unsettling pattern. The village seems deserted, but you can hear chanting from somewhere deeper in. A narrow path leads towards the center, while an overgrown trail branches east towards what appears to be an ancient temple.',
             newState: currentState
           };
         }
 
         if (verb === 'go') {
+          if (params.map(term => term.text.toLowerCase()).includes('east')) {
+            return {
+              message: 'You follow the overgrown path east towards the temple...',
+              newState: {
+                ...currentState,
+                currentRoom: 'Temple Entrance'
+              }
+            };
+          }
           return {
             message: 'You cautiously walk down the path towards the village center...',
             newState: {
@@ -272,7 +281,79 @@ export class RoomService {
         }
 
         return {
-          message: 'You can look around ("look"), examine the fires ("look fires"), or proceed into the village ("go").',
+          message: 'You can look around ("look"), examine the fires ("look fires"), go to the village center ("go") or head east to the temple ("go east").',
+          newState: currentState
+        };
+      }
+    },
+    {
+      name: 'Temple Entrance',
+      objects: [{
+        name: 'temple',
+        verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
+          if (verb === 'look') {
+            return {
+              message: 'The temple is ancient, its stone walls covered in strange symbols that seem to shift when you\'re not looking directly at them. The entrance is partially blocked by fallen debris, but there\'s enough space to squeeze through.',
+              newState: currentState
+            };
+          }
+          return {
+            message: 'The temple radiates an unnatural energy. You can enter ("enter temple") if you dare, or examine it more closely ("look temple").',
+            newState: currentState
+          };
+        }
+      }],
+      verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
+        if (verb === 'look') {
+          return {
+            message: 'You stand before an ancient temple, its architecture unlike anything you\'ve seen before. Strange symbols cover its walls, and the air feels thick with an otherworldly presence. The entrance is partially blocked but passable. You can hear the village chanting in the distance.',
+            newState: currentState
+          };
+        }
+
+        if (verb === 'enter') {
+          return {
+            message: 'Gathering your courage, you squeeze through the temple entrance...',
+            newState: {
+              ...currentState,
+              currentRoom: 'Temple Interior'
+            }
+          };
+        }
+
+        return {
+          message: 'You can look around ("look"), examine the temple ("look temple"), enter it ("enter"), or return to the village outskirts.',
+          newState: currentState
+        };
+      }
+    },
+    {
+      name: 'Temple Interior',
+      objects: [{
+        name: 'altar',
+        verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
+          if (verb === 'look') {
+            return {
+              message: 'The altar is made of black stone, covered in intricate carvings that seem to move in your peripheral vision. A strange artifact rests upon it, pulsing with an inner light.',
+              newState: currentState
+            };
+          }
+          return {
+            message: 'The altar emanates a powerful energy. You can examine it ("look altar") or try to take the artifact, though that might be dangerous.',
+            newState: currentState
+          };
+        }
+      }],
+      verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
+        if (verb === 'look') {
+          return {
+            message: 'The temple interior is dimly lit by an otherworldly glow. Ancient symbols cover the walls, and at the center stands a black stone altar. The air thrums with energy, and you can hear whispers that seem to come from nowhere and everywhere.',
+            newState: currentState
+          };
+        }
+
+        return {
+          message: 'You can look around ("look"), examine the altar ("look altar"), or try to leave before it\'s too late.',
           newState: currentState
         };
       }
@@ -284,7 +365,7 @@ export class RoomService {
         verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
           if (verb === 'look') {
             return {
-              message: 'Villagers in dark robes are performing some kind of ritual around a large bonfire. They seem to be chanting in an unknown language. In the center, there\'s a strange symbol drawn on the ground.',
+              message: 'Villagers in dark robes are performing some kind of ritual around a large bonfire. They seem to be chanting in an ancient language, their voices creating patterns in the air. In the center, there\'s a complex symbol drawn on the ground that pulses with the same energy you felt in the temple.',
               newState: currentState
             };
           }
@@ -301,7 +382,7 @@ export class RoomService {
           if (approachActions.includes(verb)) {
             currentState.health -= 100;
             return {
-              message: 'The villagers spot you and stop chanting. Their eyes glow with an unnatural light. They surround you before you can escape...',
+              message: 'The villagers spot you and stop chanting. Their eyes glow with an unnatural light, and you realize they\'re no longer entirely human. They surround you before you can escape...',
               newState: currentState
             };
           }
@@ -314,21 +395,21 @@ export class RoomService {
       verbHandler: (verb: string, currentState: GameState, params: Term[]) => {
         if (verb === 'look') {
           return {
-            message: 'You\'ve reached the village center. A large group of villagers in dark robes are gathered around a massive bonfire. They\'re performing some kind of ritual, chanting in an unknown language. The air feels heavy with an unnatural energy. You can hide behind some bushes or try to leave the village.',
+            message: 'You\'ve reached the village center. A large group of villagers in dark robes are gathered around a massive bonfire, performing a ritual that makes the air itself feel wrong. They\'re chanting in an unknown language that hurts your ears. The air feels heavy with an unnatural energy that seems connected to the temple. You can hide behind some bushes or try to leave.',
             newState: currentState
           };
         }
 
         if (verb === 'hide') {
           return {
-            message: 'You hide behind the bushes and observe the ritual from a safe distance. The chanting grows louder, and the fire seems to change color...',
+            message: 'You hide behind the bushes and observe the ritual from a safe distance. The chanting grows louder, and the fire changes color, casting shadows that move in impossible ways...',
             newState: currentState
           };
         }
 
         if (verb === 'leave') {
           return {
-            message: 'You try to quietly leave, but some villagers spot you. Their eyes glow with an unnatural light...',
+            message: 'You try to quietly leave, but some villagers spot you. Their eyes glow with an unnatural light, and you realize with horror that the ritual has already changed them into something else...',
             newState: {
               ...currentState,
               health: 0
