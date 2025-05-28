@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Benagram Incident
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="start-container">
+    <div class="game-title">
+      <h1>Benagram Incident</h1>
+      <p class="subtitle">A Text Adventure</p>
+    </div>
+    
+    <div class="game-description">
+      <p>You are about to embark on a mysterious journey to the village of Benagram. 
+         Use natural language commands to navigate through the world and solve puzzles.</p>
+      <p>Type commands like "look around", "go north", "take key", or "talk to person" to interact with the game world.</p>
+    </div>
+    
+    <div class="start-buttons">
+      <ion-button expand="block" size="large" (click)="startNewGame()" class="start-button">
+        Start New Game
+      </ion-button>
+      <ion-button expand="block" size="large" fill="outline" (click)="continueGame()" class="continue-button" *ngIf="hasSavedGame">
+        Continue Game
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

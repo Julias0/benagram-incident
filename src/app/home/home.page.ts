@@ -1,5 +1,6 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton, IonIcon, IonInput } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton, IonIcon, IonInput, IonModal, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { send } from 'ionicons/icons';
@@ -26,6 +27,11 @@ import posthog from 'posthog-js';
     IonButton,
     IonIcon,
     IonInput,
+    IonModal,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
     FormsModule,
     CommonModule
   ],
@@ -39,7 +45,9 @@ export class HomePage {
   messageService = inject(MessageService);
   stateService = inject(StateService);
   roomService = inject(RoomService);
+  router = inject(Router);
   currentState$: Observable<GameState> = this.stateService.currentState.asObservable();
+  isDead$: Observable<boolean> = this.stateService.getIsDeadObservable();
 
   constructor() {
     addIcons({ send });
@@ -98,6 +106,25 @@ export class HomePage {
   handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.sendMessage();
+    }
+  }
+
+  goToStartPage() {
+    this.router.navigate(['/start']);
+  }
+
+  restartJourney() {
+    this.stateService.resetGame();
+    this.messages = [];
+    
+    // Re-initialize the game
+    const room = this.roomService.getRoom(this.stateService.getCurrentStateValue().currentRoom);
+    if (room) {
+      this.addMessages({
+        content: room.verbHandler('look', this.stateService.getCurrentStateValue(), []).message,
+        sender: 'bot',
+        createdAt: new Date()
+      });
     }
   }
 }

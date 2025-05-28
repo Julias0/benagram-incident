@@ -78,3 +78,49 @@ ion-footer ion-toolbar {
     font-size: 0.9em;
   }
 }
+
+// Death Modal Styles
+.death-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.death-card {
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.death-title {
+  font-size: 1.5rem;
+  color: var(--ion-color-danger);
+  margin-bottom: 0;
+}
+
+.death-message {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--ion-color-dark);
+  margin-bottom: 2rem;
+}
+
+.death-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.restart-button {
+  --background: var(--ion-color-primary);
+  --color: white;
+  font-weight: 600;
+}
+
+.start-button {
+  --color: var(--ion-color-medium);
+  --border-color: var(--ion-color-medium);
+  font-weight: 600;
+}

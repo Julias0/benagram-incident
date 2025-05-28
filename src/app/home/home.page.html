@@ -32,10 +32,37 @@
         class="message-input"
         [(ngModel)]="newMessage"
         (keyup)="handleKeyPress($event)"
+        [disabled]="(isDead$ | async) || false"
       ></ion-input>
-      <ion-button fill="clear" (click)="sendMessage()">
+      <ion-button fill="clear" (click)="sendMessage()" [disabled]="(isDead$ | async) || false">
         <ion-icon name="send"></ion-icon>
       </ion-button>
     </div>
   </ion-toolbar>
 </ion-footer>
+
+<!-- Death Modal -->
+<ion-modal [isOpen]="(isDead$ | async) || false" [canDismiss]="false">
+  <ion-content class="ion-padding">
+    <div class="death-modal">
+      <ion-card class="death-card">
+        <ion-card-header>
+          <ion-card-title class="death-title">💀 Game Over</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="death-message">
+            Your health has reached zero. Your journey in Benagram has come to an end.
+          </p>
+          <div class="death-buttons">
+            <ion-button expand="block" (click)="restartJourney()" class="restart-button">
+              🔄 Restart Journey
+            </ion-button>
+            <ion-button expand="block" fill="outline" (click)="goToStartPage()" class="start-button">
+              🏠 Go to Start Page
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+</ion-modal>
